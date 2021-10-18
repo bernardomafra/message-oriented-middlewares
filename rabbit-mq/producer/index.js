@@ -17,7 +17,7 @@ function init(error, connection) {
       persistent: true,
     });
 
-    console.log(" [x] Sent '%s'", msg);
+    console.log(" [x] Sent '%s' to queue '%s", msg, queue);
 
     // closeConnection
     setTimeout(function () {
