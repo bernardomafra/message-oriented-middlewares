@@ -55,6 +55,8 @@ amqp.connect('amqp://localhost', function (connectionError, connection) {
       queueName,
     );
 
+    channel.prefetch(1);
+
     channel.consume(
       queueName,
       function (msg) {
@@ -63,9 +65,10 @@ amqp.connect('amqp://localhost', function (connectionError, connection) {
           console.log(' [x] Emitting %s', msg.content.toString());
           user.socket.emit('ws_sfa::STEP', msg.content.toString());
         }
+        setTimeout(() => channel.ack(msg), 500);
       },
       {
-        noAck: true,
+        noAck: false,
       },
     );
   });
